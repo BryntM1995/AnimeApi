@@ -1,0 +1,67 @@
+#logoImg{
+    height: 88px;
+    width: 236px;
+    border-radius: 50% 0px;
+    background-color: black;
+    border: solid 3px white;
+    object-fit: cover;
+    padding: 4px;
+}
+.card{
+    width: 100%;
+    box-shadow: 1px 1px 10px blue;
+    height: 100%;
+    transition: 1s;
+}
+.card-img-top{
+    height: 320px;
+    object-fit: fill;
+    width: 108%;
+    transition: 0.5s;
+    transform: scale(1,0.9);
+}
+body{
+    background:  linear-gradient(55deg, black ,rgb(105, 93, 93) );
+}
+.card-img-top:hover{
+    box-shadow: 4px 5px 18px red;
+    transform: scale(1,1);
+}
+h3{
+    color: white !important;
+    text-shadow: 1px 1px 10px blue;
+    margin-bottom: 2.5rem !important;
+    text-align: center;
+    font-weight: 1000 !important;
+    background-color: black;
+
+}
+.btn{
+    transition: 0.3s !important;
+}
+.btn:hover{
+    transform: scaleX(1.1) !important;
+    color: black !important;
+    background-color: orangered !important;
+    border: solid 3px black !important;
+}
+.paginator{
+    display: grid;
+    justify-content: center;
+}
+.card-title{
+    border-top: solid 1px black;
+}
+#previousPage,#nextPage,.currentPage{
+    color: blue;
+    border: solid 2px black;
+    box-shadow: 0px 1px 5px blue;
+    margin-left: 3px;
+    margin-right: 3px;
+    border-radius: 25%;
+    transition: 0.5s;
+}
+.currentPage:hover{
+    background-color: blue !important;
+    color: white !important;
+}
