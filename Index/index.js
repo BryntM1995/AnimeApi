@@ -19,7 +19,8 @@ previousPage.addEventListener('click', ()=>{
   ToGoPreviousPage();
 })
 inputField.addEventListener('keyup', (event)=>{
-  currentPage = 1
+  console.log('hola');
+  currentPage = 1;
   Paginator.textContent = 1;
   previousPage.setAttribute('disabled','');
   Paginator.textContent = currentPage;
@@ -76,6 +77,7 @@ function getAnimeByName(){
   searchQuery = `&q=${inputValue}`;
   MAIN_URL = filterQuery === undefined ? 
   `https://api.jikan.moe/v4/anime?page=${1}${searchQuery}`: `https://api.jikan.moe/v4/anime?page=${1}${filterQuery}${searchQuery}`;
+  console.log(searchQuery);
   DrawAnimes(MAIN_URL);
 }
 function filterAnimeByType(){
@@ -121,7 +123,7 @@ async function DrawAnimes(URL) {
     cardTitle.textContent = `Title: ${element.title}.`
     cardType.textContent = `Type: ${element.type}.`
     cardBtn.textContent = "Find this out!";
-    cardBtn.setAttribute('href', element.trailer.embed_url);
+    cardBtn.setAttribute('href', `../Details/details.html?id=${element.mal_id}`);
     cardBtn.setAttribute('target', 'blank');
 
     // setting tooltips
