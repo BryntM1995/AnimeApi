@@ -1,6 +1,6 @@
 let searchQuery;
 let filterQuery;
-let currentPage=1;
+let currentPage = 1;
 let MAIN_URL = `https://api.jikan.moe/v4/anime?page=${currentPage}`;
 const inputField = document.querySelector('#inputSearch');
 const container = document.querySelector(".row");
@@ -19,7 +19,6 @@ previousPage.addEventListener('click', ()=>{
   ToGoPreviousPage();
 })
 inputField.addEventListener('keyup', (event)=>{
-  console.log('hola');
   currentPage = 1;
   Paginator.textContent = 1;
   previousPage.setAttribute('disabled','');
@@ -35,29 +34,40 @@ filterSelector.addEventListener('change', ()=>{
     filterAnimeByType();
   }
   else{
-    MAIN_URL = searchQuery === undefined ? 
-    `https://api.jikan.moe/v4/anime?page=${1}`: `https://api.jikan.moe/v4/anime?page=${1}${searchQuery}`;
-    DrawAnimes(MAIN_URL);
     filterQuery = undefined;
+    MAIN_URL = filterQuery === undefined ? 
+    `https://api.jikan.moe/v4/anime?page=${currentPage}`:
+    `https://api.jikan.moe/v4/anime?page=${currentPage}${filterQuery}`;
+    MAIN_URL = searchQuery === undefined ? 
+    MAIN_URL : `https://api.jikan.moe/v4/anime?page=${currentPage}${searchQuery}`;
+    MAIN_URL = filterQuery === undefined ? MAIN_URL:
+    `https://api.jikan.moe/v4/anime?page=${currentPage}${filterQuery}${searchQuery}`;
+    console.log(MAIN_URL);
+    DrawAnimes(MAIN_URL);
   } 
 })
 // functions
 function ToGoNextPage() {
-  currentPage += 1;
+  currentPage++;
   (currentPage === allAnimes.pagination.last_visible_page) && nextPage.setAttribute('disabled','');
   (currentPage === 2) && previousPage.removeAttribute('disabled');
   (allAnimes.pagination.has_next_page) && previousPage.removeAttribute('disabled');
   Paginator.textContent = currentPage;
+  //
   MAIN_URL = filterQuery === undefined ? 
-  `https://api.jikan.moe/v4/anime?page=${currentPage}`: `https://api.jikan.moe/v4/anime?page=${currentPage}${filterQuery}`;
+  `https://api.jikan.moe/v4/anime?page=${currentPage}`:
+   `https://api.jikan.moe/v4/anime?page=${currentPage}${filterQuery}`;
+   //
   MAIN_URL = searchQuery === undefined ? 
   MAIN_URL : `https://api.jikan.moe/v4/anime?page=${currentPage}${searchQuery}`;
+  //
+
   MAIN_URL = filterQuery === undefined ? 
-  MAIN_URL : `https://api.jikan.moe/v4/anime?page=${currentPage}${filterQuery}${searchQuery}`;
+  `https://api.jikan.moe/v4/anime?page=${currentPage}${filterQuery}${searchQuery}`: MAIN_URL;
   DrawAnimes(MAIN_URL);
 }
 function ToGoPreviousPage() {
-  currentPage -= 1;
+  currentPage--;
   ( currentPage !== allAnimes.pagination.last_visible_page) && nextPage.removeAttribute('disabled');
   (currentPage === 1 ) && previousPage.setAttribute('disabled','');
   (allAnimes.pagination.has_next_page) && nextPage.removeAttribute('disabled');
@@ -68,7 +78,7 @@ function ToGoPreviousPage() {
   MAIN_URL = searchQuery === undefined ? 
   MAIN_URL : `https://api.jikan.moe/v4/anime?page=${currentPage}${searchQuery}`;
   MAIN_URL = filterQuery === undefined ? 
-  MAIN_URL : `https://api.jikan.moe/v4/anime?page=${currentPage}${filterQuery}${searchQuery}`;
+  `https://api.jikan.moe/v4/anime?page=${currentPage}${filterQuery}${searchQuery}`:  MAIN_URL;
   DrawAnimes(MAIN_URL);
 }
 
@@ -77,14 +87,14 @@ function getAnimeByName(){
   searchQuery = `&q=${inputValue}`;
   MAIN_URL = filterQuery === undefined ? 
   `https://api.jikan.moe/v4/anime?page=${1}${searchQuery}`: `https://api.jikan.moe/v4/anime?page=${1}${filterQuery}${searchQuery}`;
-  console.log(searchQuery);
   DrawAnimes(MAIN_URL);
 }
 function filterAnimeByType(){
   let selectorValue = filterSelector.value;
   filterQuery = `&type=${selectorValue}`;
   MAIN_URL = searchQuery === undefined ? 
-   `https://api.jikan.moe/v4/anime?page=${1}${filterQuery}`: `https://api.jikan.moe/v4/anime?page=${1}${filterQuery}${searchQuery}`;
+   `https://api.jikan.moe/v4/anime?page=${currentPage}${filterQuery}`:
+    `https://api.jikan.moe/v4/anime?page=${1}${filterQuery}${searchQuery}`;
   DrawAnimes(MAIN_URL);
 }
 //async functions
